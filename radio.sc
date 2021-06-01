@@ -61,7 +61,7 @@
                 p['hluk'] = NodeProxy.audio(s, 2);
                 p['hluk'][0] = {
                         var sig = HPF.ar(
-                            PlayBuf.ar(2, e.hluk, rate: 0.5, loop: 1), 
+                            PlayBuf.ar(2, e.hluk, rate: 0.5, loop: 1) * 4, 
                             LFNoise2.ar(0.125/8, 0.5, 0.5) * 1000 + 50
                         );
                         HPF.ar((PinkNoise.ar([0.75, 0.75]) ** 6) + sig, 1400);
@@ -72,11 +72,12 @@
                     p[x] = NodeProxy.audio(s, 2);
                     p[x][0] = { arg buf, pos = 0, treshold = 0.125, pan = 0, dur = 2, lpf = 1000;
                         var running_pos;                        
-                        var sig = PlayBuf.ar(1, buf, startPos: pos, rate: BufRateScale.kr(buf), loop: 1) * 2;
+                        var sig = PlayBuf.ar(1, buf, startPos: pos, rate: BufRateScale.kr(buf), loop: 1);
                         var trig = abs(1 - DetectSilence.ar(sig, treshold, dur));
                         sig = sig * EnvGen.ar(Env.asr(0.1, 1, 1), trig);
+                        sig = Limiter.ar(sig, 0.5, 1);
                         PauseSelf.kr(trig); 
-                        Pan2.ar(sig, pan);               
+                        Pan2.ar(sig * 0.5, pan);               
                     };
                     p[x].set(\buf, buf);  
                     p[x].play;
