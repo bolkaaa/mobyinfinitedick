@@ -46,6 +46,8 @@
         }
     );
 
+    s.options.memSize = 2 ** 20;
+
     Server.default.waitForBoot({
         fork {
             1.do {
