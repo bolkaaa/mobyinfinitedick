@@ -11,7 +11,7 @@
     //////////////////////////////////////////////////////////////
 
     e = (
-        dir: "/matros/",
+        dir: "/home/ubuntu/mobyinfinitedick/matros/",
         started: IdentityDictionary.new,
         buf: IdentityDictionary.new,
         load: { arg ev, server, path, namespace = "all";
